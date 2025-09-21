@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaniAI - Health Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f7fd;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100%;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        
+        /* Legal warning */
+        .legal-warning {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #c62828;
+            font-size: 14px;
+        }
+        
+        /* Screens */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #1a73e8;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #5f6368;
+            font-size: 16px;
+        }
+        
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d62c9;
+        }
+        
+        .btn-secondary {
+            background-color: #f1f3f4;
+            color: #5f6368;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e8eaed;
+        }
+        
+        /* Symptoms */
+        .symptoms-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .symptom-item {
+            background: white;
+            border: 2px solid #e8eaed;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100px;
+        }
+        
+        .symptom-item.selected {
+            border-color: #1a73e8;
+            background-color: #e8f0fe;
+        }
+        
+        .symptom-item i {
+            font-size: 24px;
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .symptom-item span {
+            font-size: 14px;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #e8eaed;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        /* Results */
+        .result-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .diagnosis {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .high-probability {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .emergency {
+            background-color: #fff8e1;
+            color: #ff8f00;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        /* Map */
+        #map {
+            height: 300px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        /* Loader */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .loader i {
+            font-size: 40px;
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #5f6368;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 500px;
+            }
+            
+            .symptoms-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 800px;
+            }
+            
+            .symptoms-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        /* Search */
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 15px 15px 15px 40px;
+            border: 1px solid #e8eaed;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        
+        .search-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5f6368;
+        }
+        
+        /* Category filter */
+        .category-filter {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+        
+        .category-btn {
+            padding: 8px 15px;
+            background: #f1f3f4;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .category-btn.active {
+            background: #1a73e8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Legal warning -->
+        <div class="legal-warning">
+            ⚠️ This is a prototype and should not be used for real medical advice.
+        </div>
+        
+        <!-- Home screen -->
+        <div id="home-screen" class="screen active">
+            <div class="header">
+                <h1>SaniAI</h1>
+                <p>Your intelligent health assistant</p>
+            </div>
+            
+            <div class="card">
+                <p style="margin-bottom: 20px; text-align: center;">
+                    SaniAI uses artificial intelligence to help you assess your symptoms and direct you to the nearest health services.
+                </p>
+                
+                <button id="start-btn" class="btn btn-primary">
+                    Start Diagnosis
+                </button>
+            </div>
+            
+            <div class="footer">
+                <p>SaniAI Prototype - Version 2.0</p>
+            </div>
+        </div>
+        
+        <!-- Diagnostic screen -->
+        <div id="diagnostic-screen" class="screen">
+            <div class="header">
+                <h1>Self-Diagnosis</h1>
+                <p>Select your symptoms</p>
+            </div>
+            
+            <div class="card">
+                <div class="form-group">
+                    <label for="location">Your location</label>
+                    <select id="location">
+                        <option value="Uganda, Kamuli district">Uganda, Kamuli district</option>
+                        <option value="Kenya, Kisumu region">Kenya, Kisumu region</option>
+                        <option value="Nigeria, Lagos State">Nigeria, Lagos State</option>
+                        <option value="Senegal, Dakar region">Senegal, Dakar region</option>
+                    </select>
+                </div>
+                
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="symptom-search" placeholder="Search symptoms...">
+                </div>
+                
+                <div class="category-filter">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="general">General</button>
+                    <button class="category-btn" data-category="respiratory">Respiratory</button>
+                    <button class="category-btn" data-category="digestive">Digestive</button>
+                    <button class="category-btn" data-category="neurological">Neurological</button>
+                    <button class="category-btn" data-category="emergency">Emergency</button>
+                </div>
+                
+                <div class="symptoms-grid" id="symptoms-container">
+                    <!-- Symptoms will be populated by JavaScript -->
+                </div>
+                
+                <div id="selected-symptoms" style="margin-bottom: 20px; font-size: 14px;">
+                    <strong>Selected: </strong><span id="selected-count">0</span> symptoms
+                </div>
+                
+                <button id="analyze-btn" class="btn btn-primary">
+                    Analyze Symptoms
+                </button>
+                
+                <button id="back-to-home" class="btn btn-secondary" style="margin-top: 10px;">
+                    Back
+                </button>
+            </div>
+        </div>
+        
+        <!-- Loading screen -->
+        <div id="loading-screen" class="screen">
+            <div class="loader">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Analyzing your symptoms with AI...</p>
+            </div>
+        </div>
+        
+        <!-- Result screen -->
+        <div id="result-screen" class="screen">
+            <div class="header">
+                <h1>Diagnosis Results</h1>
+                <p>Based on your symptoms and location</p>
+            </div>
+            
+            <div class="card">
+                <div id="diagnosis-result">
+                    <!-- Results will be inserted here by JavaScript -->
+                </div>
+                
+                <button id="find-services-btn" class="btn btn-primary">
+                    Find services near me
+                </button>
+                
+                <button id="back-to-diagnostic" class="btn btn-secondary" style="margin-top: 10px;">
+                    Back to diagnosis
+                </button>
+            </div>
+        </div>
+        
+        <!-- Services screen -->
+        <div id="services-screen" class="screen">
+            <div class="header">
+                <h1>Nearby health services</h1>
+                <p id="location-display">Uganda, Kamuli district</p>
+            </div>
+            
+            <div class="card">
+                <div id="map"></div>
+                
+                <div id="healthcare-list">
+                    <!-- Healthcare list will be inserted here by JavaScript -->
+                </div>
+                
+                <button id="back-to-results" class="btn btn-secondary">
+                    Back to results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Simulated healthcare facility data
+        const healthcareFacilities = {
+            "Uganda, Kamuli district": [
+                { name: "Kamuli Health Center", lat: 0.947, lng: 33.123, phone: "+256 123 456 789", distance: "2 km" },
+                { name: "St. Mary Dispensary", lat: 0.937, lng: 33.135, phone: "+256 234 567 890", distance: "5 km" },
+                { name: "Kamuli Regional Hospital", lat: 0.957, lng: 33.145, phone: "+256 345 678 901", distance: "8 km" }
+            ],
+            "Kenya, Kisumu region": [
+                { name: "Kisumu County Hospital", lat: -0.102, lng: 34.762, phone: "+254 123 456 789", distance: "1 km" },
+                { name: "Aga Khan Hospital Kisumu", lat: -0.095, lng: 34.771, phone: "+254 234 567 890", distance: "3 km" },
+                { name: "Jaramogi Oginga Hospital", lat: -0.108, lng: 34.755, phone: "+254 345 678 901", distance: "5 km" }
+            ],
+            "Nigeria, Lagos State": [
+                { name: "Lagos State University Hospital", lat: 6.524, lng: 3.379, phone: "+234 123 456 789", distance: "2 km" },
+                { name: "St. Nicholas Hospital Lagos", lat: 6.452, lng: 3.384, phone: "+234 234 567 890", distance: "4 km" },
+                { name: "Reddington Hospital Victoria Island", lat: 6.428, lng: 3.426, phone: "+234 345 678 901", distance: "7 km" }
+            ],
+            "Senegal, Dakar region": [
+                { name: "Grand Yoff General Hospital", lat: 14.728, lng: -17.461, phone: "+221 123 456 789", distance: "3 km" },
+                { name: "Pasteur Institute of Dakar", lat: 14.675, lng: -17.437, phone: "+221 234 567 890", distance: "5 km" },
+                { name: "Hann Health Center", lat: 14.751, lng: -17.439, phone: "+221 345 678 901", distance: "8 km" }
+            ]
+        };
+
+        // Comprehensive symptoms list
+        const symptoms = [
+            { id: "fever", name: "Fever", icon: "fas fa-thermometer-full", category: "general" },
+            { id: "cough", name: "Cough", icon: "fas fa-lungs", category: "respiratory" },
+            { id: "headache", name: "Headache", icon: "fas fa-head-side-brain", category: "neurological" },
+            { id: "muscle-pain", name: "Muscle pain", icon: "fas fa-running", category: "general" },
+            { id: "nausea", name: "Nausea", icon: "fas fa-stomach", category: "digestive" },
+            { id: "fatigue", name: "Fatigue", icon: "fas fa-bed", category: "general" },
+            { id: "rash", name: "Skin rash", icon: "fas fa-allergies", category: "general" },
+            { id: "chest-pain", name: "Chest pain", icon: "fas fa-heart", category: "emergency" },
+            { id: "shortness-breath", name: "Shortness of breath", icon: "fas fa-wind", category: "respiratory" },
+            { id: "dizziness", name: "Dizziness", icon: "fas fa-dizzy", category: "neurological" },
+            { id: "abdominal-pain", name: "Abdominal pain", icon: "fas fa-stomach", category: "digestive" },
+            { id: "vomiting", name: "Vomiting", icon: "fas fa-vomit", category: "digestive" },
+            { id: "diarrhea", name: "Diarrhea", icon: "fas fa-poop", category: "digestive" },
+            { id: "sore-throat", name: "Sore throat", icon: "fas fa-head-side-cough", category: "respiratory" },
+            { id: "runny-nose", name: "Runny nose", icon: "fas fa-head-cold", category: "respiratory" },
+            { id: "sneezing", name: "Sneezing", icon: "fas fa-wind", category: "respiratory" },
+            { id: "chills", name: "Chills", icon: "fas fa-snowflake", category: "general" },
+            { id: "sweating", name: "Sweating", icon: "fas fa-tint", category: "general" },
+            { id: "swelling", name: "Swelling", icon: "fas fa-weight", category: "general" },
+            { id: "joint-pain", name: "Joint pain", icon: "fas fa-bone", category: "general" },
+            { id: "back-pain", name: "Back pain", icon: "fas fa-bone", category: "general" },
+            { id: "eye-pain", name: "Eye pain", icon: "fas fa-eye", category: "general" },
+            { id: "vision-problems", name: "Vision problems", icon: "fas fa-glasses", category: "neurological" },
+            { id: "ear-pain", name: "Ear pain", icon: "fas fa-ear", category: "general" },
+            { id: "hearing-loss", name: "Hearing loss", icon: "fas fa-deaf", category: "general" },
+            { id: "fainting", name: "Fainting", icon: "fas fa-procedures", category: "emergency" },
+            { id: "seizure", name: "Seizure", icon: "fas fa-brain", category: "emergency" },
+            { id: "confusion", name: "Confusion", icon: "fas fa-comment-medical", category: "neurological" },
+            { id: "slurred-speech", name: "Slurred speech", icon: "fas fa-comment", category: "neurological" },
+            { id: "numbness", name: "Numbness", icon: "fas fa-hand-paper", category: "neurological" },
+            { id: "weakness", name: "Weakness", icon: "fas fa-wheelchair", category: "general" },
+            { id: "bleeding", name: "Bleeding", icon: "fas fa-tint", category: "emergency" },
+            { id: "bruising", name: "Bruising", icon: "fas fa-hand-paper", category: "general" },
+            { id: "palpitations", name: "Heart palpitations", icon: "fas fa-heartbeat", category: "emergency" },
+            { id: "snake-bite", name: "Snake bite", icon: "fas fa-strikethrough", category: "emergency" },
+            { id: "dog-bite", name: "Dog bite", icon: "fas fa-paw", category: "emergency" },
+            { id: "burn", name: "Burn", icon: "fas fa-fire", category: "emergency" },
+            { id: "allergic-reaction", name: "Allergic reaction", icon: "fas fa-allergies", category: "emergency" },
+            { id: "difficulty-swallowing", name: "Difficulty swallowing", icon: "fas fa-utensils", category: "digestive" },
+            { id: "loss-smell", name: "Loss of smell", icon: "fas fa-nose", category: "general" },
+            { id: "loss-taste", name: "Loss of taste", icon: "fas fa-ice-cream", category: "general" }
+        ];
+
+        // Global variables
+        let selectedSymptoms = [];
+        let userLocation = "Uganda, Kamuli district";
+        let map;
+        let currentCategory = "all";
+
+        // DOM elements
+        const screens = document.querySelectorAll('.screen');
+        const startBtn = document.getElementById('start-btn');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const findServicesBtn = document.getElementById('find-services-btn');
+        const backToHomeBtn = document.getElementById('back-to-home');
+        const backToDiagnosticBtn = document.getElementById('back-to-diagnostic');
+        const backToResultsBtn = document.getElementById('back-to-results');
+        const locationSelect = document.getElementById('location');
+        const symptomsContainer = document.getElementById('symptoms-container');
+        const diagnosisResult = document.getElementById('diagnosis-result');
+        const healthcareList = document.getElementById('healthcare-list');
+        const locationDisplay = document.getElementById('location-display');
+        const loadingScreen = document.getElementById('loading-screen');
+        const symptomSearch = document.getElementById('symptom-search');
+        const selectedCount = document.getElementById('selected-count');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+
+        // Screen navigation
+        function showScreen(screenId) {
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Initialize map
+        function initMap(location) {
+            const facilities = healthcareFacilities[location];
+            if (!facilities || facilities.length === 0) return;
+            
+            const mapElement = document.getElementById('map');
+            if (map) {
+                map.remove();
+            }
+            
+            map = L.map('map').setView([facilities[0].lat, facilities[0].lng], 12);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+            
+            facilities.forEach(facility => {
+                L.marker([facility.lat, facility.lng])
+                    .addTo(map)
+                    .bindPopup(`
+                        <strong>${facility.name}</strong><br>
+                        Tel: ${facility.phone}<br>
+                        Distance: ${facility.distance}
+                    `);
+            });
+        }
+
+        // Generate diagnosis (simulated Gemini API)
+        function generateDiagnosis(symptoms, location) {
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    let diagnosis = "";
+                    const symptomsText = symptoms.join(', ');
+                    
+                    // Check for emergency conditions first
+                    if (symptoms.includes("Snake bite")) {
+                        diagnosis = `
+                            <div class="emergency">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                EMERGENCY: Snake Bite
+                            </div>
+                            <div class="diagnosis">
+                                <h3>Immediate Action Required</h3>
+                                <p>Snake bites can be life-threatening. Please follow these steps immediately:</p>
+                                <ul>
+                                    <li>Keep calm and try to stay still to slow venom spread</li>
+                                    <li>Remove any tight clothing or jewelry near the bite</li>
+                                    <li>Keep the affected area at or below heart level</li>
+                                    <li>Do NOT cut the wound or attempt to suck out venom</li>
+                                    <li>Do NOT apply a tourniquet or ice</li>
+                                    <li>Seek emergency medical help immediately</li>
+                                    <li>If possible, take a photo of the snake for identification (from a safe distance)</li>
+                                </ul>
+                                <p>Your location: ${location}. The nearest medical facilities are shown on the services page.</p>
+                            </div>
+                        `;
+                    } else if (symptoms.includes("Dog bite")) {
+                        diagnosis = `
+                            <div class="emergency">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                URGENT: Animal Bite
+                            </div>
+                            <div class="diagnosis">
+                                <h3>Immediate Action Required</h3>
+                                <p>Animal bites can cause serious infections and may require rabies treatment:</p>
+                                <ul>
+                                    <li>Wash the wound thoroughly with soap and running water for at least 5 minutes</li>
+                                    <li>Apply pressure with a clean cloth to stop any bleeding</li>
+                                    <li>Apply an antibiotic ointment if available</li>
+                                    <li>Cover with a clean bandage</li>
+                                    <li>Seek medical attention within 24 hours</li>
+                                    <li>Try to identify the animal and its vaccination status</li>
+                                    <li>Watch for signs of infection: redness, swelling, pain, or pus</li>
+                                </ul>
+                                <p>Your location: ${location}. The nearest medical facilities are shown on the services page.</p>
+                            </div>
+                        `;
+                    } else if (symptoms.includes("Seizure")) {
+                        diagnosis = `
+                            <div class="emergency">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                SEIZURE: Emergency Assistance Needed
+                            </div>
+                            <div class="diagnosis">
+                                <h3>If someone is currently having a seizure:</h3>
+                                <ul>
+                                    <li>Stay calm and time the seizure</li>
+                                    <li>Clear the area of hard or sharp objects</li>
+                                    <li>Place something soft under their head</li>
+                                    <li>Turn them on their side to help breathing</li>
+                                    <li>Do NOT put anything in their mouth</li>
+                                    <li>Do NOT restrain them</li>
+                                    <li>Call for emergency help if seizure lasts more than 5 minutes</li>
+                                </ul>
+                                <h3>After the seizure:</h3>
+                                <ul>
+                                    <li>Stay with them until fully awake</li>
+                                    <li>Explain what happened calmly</li>
+                                    <li>Offer help getting to a medical facility</li>
+                                </ul>
+                                <p>Your location: ${location}. The nearest medical facilities are shown on the services page.</p>
+                            </div>
+                        `;
+                    } else if (symptoms.includes("Fainting")) {
+                        diagnosis = `
+                            <div class="emergency">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Fainting (Syncope)
+                            </div>
+                            <div class="diagnosis">
+                                <h3>If someone has fainted:</h3>
+                                <ul>
+                                    <li>Check for responsiveness and breathing</li>
+                                    <li>Position them on their back and elevate their legs</li>
+                                    <li>Loosen tight clothing</li>
+                                    <li>Ensure fresh air circulation</li>
+                                    <li>Do not give anything to eat or drink until fully alert</li>
+                                    <li>When conscious, have them sit up slowly</li>
+                                    <li>If they don't wake up within a minute, call for emergency help</li>
+                                </ul>
+                                <h3>Common causes:</h3>
+                                <ul>
+                                    <li>Dehydration</li>
+                                    <li>Low blood sugar</li>
+                                    <li>Standing up too quickly</li>
+                                    <li>Emotional stress</li>
+                                    <li>Heart issues (if recurrent)</li>
+                                </ul>
+                                <p>Your location: ${location}. The nearest medical facilities are shown on the services page.</p>
+                            </div>
+                        `;
+                    } else if (symptoms.includes("Chest pain") || symptoms.includes("Heart palpitations")) {
+                        diagnosis = `
+                            <div class="emergency">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                CARDIAC SYMPTOMS: Seek Immediate Care
+                            </div>
+                            <div class="diagnosis">
+                                <h3>Possible cardiac symptoms require immediate evaluation:</h3>
+                                <ul>
+                                    <li>Stop any physical activity and rest</li>
+                                    <li>If pain is crushing, radiating to arm/jaw, or accompanied by shortness of breath, seek emergency care immediately</li>
+                                    <li>Chew one aspirin if not allergic (unless contraindicated)</li>
+                                    <li>Do not drive yourself to the hospital</li>
+                                    <li>Monitor for sweating, nausea, or lightheadedness</li>
+                                </ul>
+                                <p>Your location: ${location}. The nearest medical facilities are shown on the services page.</p>
+                            </div>
+                        `;
+                    } else if (symptoms.includes("Fever") && symptoms.includes("Headache") && symptoms.includes("Muscle pain")) {
+                        diagnosis = `
+                            <div class="high-probability">
+                                <i class="fas fa-exclamation-circle"></i>
+                                High probability of Malaria or similar febrile illness
+                            </div>
+                            <div class="diagnosis">
+                                <h3>Preliminary Diagnosis</h3>
+                                <p>Based on your symptoms (${symptomsText}) and the fact that malaria is endemic in your region (${location}), there is a high probability that you may have malaria.</p>
+                                
+                                <h3>Immediate Action Plan</h3>
+                                <ul>
+                                    <li>Rest and hydrate abundantly</li>
+                                    <li>Take paracetamol to reduce fever (follow dosage instructions)</li>
+                                    <li>Use a mosquito net to prevent additional mosquito bites</li>
+                                    <li>Consult a healthcare professional as soon as possible for a confirmation test and appropriate treatment</li>
+                                </ul>
+                                
+                                <h3>⚠️ Important Warning</h3>
+                                <p>This diagnosis is provided for informational purposes only and does not replace professional medical consultation. Malaria can be a serious disease if not treated properly.</p>
+                            </div>
+                        `;
+                    } else {
+                        diagnosis = `
+                            <div class="diagnosis">
+                                <h3>Analysis of your symptoms</h3>
+                                <p>Based on your symptoms (${symptomsText}) and your location (${location}), several conditions could explain your condition.</p>
+                                
+                                <h3>Recommendations</h3>
+                                <ul>
+                                    <li>Monitor the evolution of your symptoms</li>
+                                    <li>Rest and hydrate well</li>
+                                    <li>Consult a healthcare professional if symptoms persist or worsen</li>
+                                </ul>
+                                
+                                <h3>⚠️ Important Warning</h3>
+                                <p>This diagnosis is provided for informational purposes only and does not replace professional medical consultation.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    resolve(diagnosis);
+                }, 2000);
+            });
+        }
+
+        // Display healthcare facilities
+        function displayHealthcareFacilities(location) {
+            const facilities = healthcareFacilities[location];
+            if (!facilities || facilities.length === 0) {
+                healthcareList.innerHTML = "<p>No healthcare services found in your area.</p>";
+                return;
+            }
+            
+            let html = "<h3>Nearby healthcare services</h3>";
+            facilities.forEach(facility => {
+                html += `
+                    <div class="healthcare-item" style="margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 8px;">
+                        <h4 style="margin-bottom: 5px;">${facility.name}</h4>
+                        <p style="margin-bottom: 5px;">📞 ${facility.phone}</p>
+                        <p style="margin-bottom: 5px;">📍 Distance: ${facility.distance}</p>
+                    </div>
+                `;
+            });
+            
+            healthcareList.innerHTML = html;
+        }
+
+        // Render symptoms based on category and search
+        function renderSymptoms() {
+            const searchText = symptomSearch.value.toLowerCase();
+            symptomsContainer.innerHTML = '';
+            
+            symptoms
+                .filter(symptom => {
+                    const matchesCategory = currentCategory === 'all' || symptom.category === currentCategory;
+                    const matchesSearch = symptom.name.toLowerCase().includes(searchText);
+                    return matchesCategory && matchesSearch;
+                })
+                .forEach(symptom => {
+                    const symptomElement = document.createElement('div');
+                    symptomElement.className = `symptom-item ${selectedSymptoms.includes(symptom.name) ? 'selected' : ''}`;
+                    symptomElement.setAttribute('data-symptom', symptom.name);
+                    symptomElement.setAttribute('data-category', symptom.category);
+                    
+                    symptomElement.innerHTML = `
+                        <i class="${symptom.icon}"></i>
+                        <span>${symptom.name}</span>
+                    `;
+                    
+                    symptomElement.addEventListener('click', () => {
+                        if (selectedSymptoms.includes(symptom.name)) {
+                            selectedSymptoms = selectedSymptoms.filter(s => s !== symptom.name);
+                            symptomElement.classList.remove('selected');
+                        } else {
+                            selectedSymptoms.push(symptom.name);
+                            symptomElement.classList.add('selected');
+                        }
+                        selectedCount.textContent = selectedSymptoms.length;
+                    });
+                    
+                    symptomsContainer.appendChild(symptomElement);
+                });
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', () => {
+            showScreen('diagnostic-screen');
+        });
+
+        analyzeBtn.addEventListener('click', async () => {
+            userLocation = locationSelect.value;
+            
+            if (selectedSymptoms.length === 0) {
+                alert("Please select at least one symptom.");
+                return;
+            }
+            
+            showScreen('loading-screen');
+            
+            const diagnosis = await generateDiagnosis(selectedSymptoms, userLocation);
+            diagnosisResult.innerHTML = diagnosis;
+            
+            showScreen('result-screen');
+        });
+
+        findServicesBtn.addEventListener('click', () => {
+            locationDisplay.textContent = userLocation;
+            displayHealthcareFacilities(userLocation);
+            initMap(userLocation);
+            showScreen('services-screen');
+        });
+
+        backToHomeBtn.addEventListener('click', () => {
+            showScreen('home-screen');
+        });
+
+        backToDiagnosticBtn.addEventListener('click', () => {
+            showScreen('diagnostic-screen');
+        });
+
+        backToResultsBtn.addEventListener('click', () => {
+            showScreen('result-screen');
+        });
+
+        symptomSearch.addEventListener('input', renderSymptoms);
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentCategory = button.getAttribute('data-category');
+                renderSymptoms();
+            });
+        });
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSymptoms();
+            
+            // Pre-select some symptoms for demonstration
+            const demoSymptoms = ["Fever", "Headache", "Muscle pain"];
+            demoSymptoms.forEach(symptomName => {
+                if (!selectedSymptoms.includes(symptomName)) {
+                    selectedSymptoms.push(symptomName);
+                }
+            });
+            selectedCount.textContent = selectedSymptoms.length;
+            renderSymptoms();
+        });
+    </script>
+</body>
+</html>
