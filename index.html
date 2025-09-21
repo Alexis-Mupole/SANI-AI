@@ -23,13 +23,13 @@
         .screen {
             display: none;
             padding: 20px;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.3s ease-in-out;
         }
         .screen.active {
             display: block;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .header {
@@ -46,6 +46,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 15px;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
         }
         .logo svg {
             width: 40px;
@@ -56,20 +57,30 @@
             font-size: 1.8rem;
             color: #2c3e50;
             margin-bottom: 10px;
+            font-weight: 700;
         }
         h2 {
             font-size: 1.5rem;
             color: #3498db;
             margin-bottom: 20px;
+            font-weight: 600;
         }
         h3 {
             font-size: 1.2rem;
             margin: 15px 0 10px;
             color: #2c3e50;
+            font-weight: 600;
+        }
+        h4 {
+            font-size: 1.1rem;
+            margin: 15px 0 10px;
+            color: #27ae60;
+            font-weight: 600;
         }
         p {
             font-size: 1rem;
             margin-bottom: 15px;
+            line-height: 1.5;
         }
         .btn {
             display: block;
@@ -83,17 +94,29 @@
             font-weight: 600;
             cursor: pointer;
             margin: 20px 0;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(79, 172, 254, 0.3);
         }
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
         }
+        .btn:active {
+            transform: translateY(0);
+        }
         .btn-secondary {
             background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            box-shadow: 0 3px 10px rgba(155, 89, 182, 0.3);
+        }
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
         }
         .btn-emergency {
             background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+        }
+        .btn-emergency:hover {
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
         }
         .symptom-container {
             margin-bottom: 20px;
@@ -106,10 +129,13 @@
             border-radius: 10px;
             margin-bottom: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            transition: all 0.2s ease;
+            border: 1px solid #ecf0f1;
         }
         .symptom-item:hover {
             transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #3498db;
         }
         .symptom-icon {
             width: 40px;
@@ -122,22 +148,30 @@
             margin-right: 15px;
             color: #3498db;
             font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+        .symptom-item:hover .symptom-icon {
+            background: #3498db;
+            color: white;
         }
         .symptom-label {
             flex: 1;
             font-size: 1rem;
+            font-weight: 500;
         }
         .checkbox {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             accent-color: #3498db;
+            cursor: pointer;
         }
         .result-container {
             background: white;
             border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             margin-bottom: 20px;
+            border: 1px solid #ecf0f1;
         }
         .diagnosis-title {
             font-size: 1.3rem;
@@ -152,11 +186,13 @@
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
+            border-left: 4px solid #27ae60;
         }
         .advice-title {
             font-weight: bold;
             color: #27ae60;
             margin-bottom: 10px;
+            font-size: 1.1rem;
         }
         .map-container {
             height: 300px;
@@ -164,6 +200,7 @@
             overflow: hidden;
             margin: 20px 0;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 1px solid #ecf0f1;
         }
         .health-center {
             background: white;
@@ -171,11 +208,18 @@
             border-radius: 10px;
             margin: 15px 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #ecf0f1;
+            transition: all 0.2s ease;
+        }
+        .health-center:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .center-name {
             font-weight: bold;
             color: #2c3e50;
             margin-bottom: 5px;
+            font-size: 1.1rem;
         }
         .center-address {
             color: #7f8c8d;
@@ -185,6 +229,7 @@
         .center-phone {
             color: #3498db;
             font-weight: bold;
+            font-size: 1rem;
         }
         .disclaimer {
             background: #e74c3c;
@@ -196,6 +241,12 @@
             margin: 20px 0;
             font-size: 0.9rem;
             box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
         }
         .location-input {
             width: 100%;
@@ -204,11 +255,13 @@
             border-radius: 10px;
             font-size: 1rem;
             margin: 20px 0;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
         }
         .location-input:focus {
             outline: none;
             border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
         .loading {
             text-align: center;
@@ -229,8 +282,12 @@
             100% { transform: rotate(360deg); }
         }
         .back-btn {
-            background: #95a5a6;
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
             margin-top: 10px;
+            box-shadow: 0 3px 10px rgba(149, 165, 166, 0.3);
+        }
+        .back-btn:hover {
+            box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
         }
         .emergency-menu, .prevention-menu {
             display: grid;
@@ -245,20 +302,25 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s ease;
+            border: 1px solid #ecf0f1;
         }
         .emergency-card:hover, .prevention-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #3498db;
         }
         .emergency-icon, .prevention-icon {
             font-size: 2rem;
             margin-bottom: 10px;
+            display: block;
         }
         .tab-menu {
             display: flex;
             margin-bottom: 20px;
             overflow-x: auto;
+            gap: 5px;
+            padding-bottom: 10px;
         }
         .tab-btn {
             padding: 12px 20px;
@@ -268,12 +330,17 @@
             cursor: pointer;
             white-space: nowrap;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            border-radius: 8px 8px 0 0;
+            flex: 1;
+            text-align: center;
+            min-width: 100px;
         }
         .tab-btn.active {
             background: #3498db;
             color: white;
             border-bottom: 3px solid #2980b9;
+            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2);
         }
         .tab-content {
             display: none;
@@ -286,8 +353,9 @@
         .prevention-title {
             text-align: center;
             margin: 25px 0 30px;
-            color: var(--dark-color);
+            color: #1B5E20;
             font-size: 1.8rem;
+            font-weight: 700;
         }
         
         .fluid-button {
@@ -297,18 +365,20 @@
             padding: 20px;
             text-align: left;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
             display: flex;
             align-items: center;
             position: relative;
             overflow: hidden;
+            margin-bottom: 15px;
         }
         
         .fluid-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
             background-color: #F1F8E9;
+            border-color: #388E3C;
         }
         
         .fluid-button:active {
@@ -326,6 +396,11 @@
             margin-right: 15px;
             color: white;
             font-size: 1.5rem;
+            transition: all 0.2s;
+        }
+        
+        .fluid-button:hover .button-icon {
+            background-color: #388E3C;
         }
         
         .button-content {
@@ -342,6 +417,7 @@
         .button-description {
             font-size: 0.9rem;
             color: #666;
+            line-height: 1.4;
         }
         
         .result-modal {
@@ -356,6 +432,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            backdrop-filter: blur(5px);
         }
         
         .modal-content {
@@ -364,9 +441,10 @@
             padding: 25px;
             width: 100%;
             max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: relative;
             animation: slideUp 0.3s ease;
+            border: 1px solid #ecf0f1;
         }
         
         @keyframes slideUp {
@@ -389,6 +467,18 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: #666;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .close-modal:hover {
+            background: #f8f9fa;
+            color: #e74c3c;
         }
         
         .modal-title {
@@ -397,11 +487,22 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid #4CAF50;
+            font-weight: 600;
         }
         
         .modal-content p {
             margin-bottom: 15px;
             line-height: 1.7;
+        }
+        
+        .modal-content ol, .modal-content ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
         
         .prevention-loading {
@@ -421,20 +522,85 @@
         }
         
         /* Responsive adjustments */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .container {
                 padding: 15px;
             }
             h1 {
+                font-size: 1.6rem;
+            }
+            .btn {
+                padding: 14px;
+                font-size: 1.05rem;
+            }
+            .emergency-menu, .prevention-menu {
+                grid-template-columns: 1fr;
+            }
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            .logo svg {
+                width: 35px;
+                height: 35px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            h1 {
                 font-size: 1.5rem;
+            }
+            h2 {
+                font-size: 1.3rem;
             }
             .btn {
                 padding: 12px;
                 font-size: 1rem;
             }
-            .emergency-menu, .prevention-menu {
-                grid-template-columns: 1fr;
+            .symptom-item {
+                padding: 12px;
             }
+            .symptom-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+            .result-container {
+                padding: 20px;
+            }
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            .button-title {
+                font-size: 1.1rem;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+        
+        /* Performance optimizations */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        img, iframe {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        /* Animation performance */
+        .btn, .symptom-item, .emergency-card, .fluid-button, .health-center {
+            will-change: transform, box-shadow;
         }
     </style>
 </head>
@@ -640,7 +806,7 @@
                 <div id="preventionModalContent">
                     <!-- Content will be inserted here by JavaScript -->
                 </div>
-                <button class="btn back-btn" onclick="closePreventionModal()">Fermer</button>
+                <button class="btn back-btn" onclick="closePreventionModal()" style="margin-top: 15px;">Fermer</button>
             </div>
         </div>
         
@@ -665,563 +831,575 @@
     </div>
     
     <script>
-        // Gemini API Key
-        const GEMINI_API_KEY = "AIzaSyCitXohWZsQ1ZiJRWunf6pJ80-B-PE5jPg";
-        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+        // Performance optimization - defer non-critical operations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize app after page load
+            initApp();
+        });
         
-        // Simulated geolocation
-        let userLocation = "Ouganda, district de Kamuli";
-        
-        // Simulated database of health centers
-        const healthCenters = [
-            {
-                name: "Centre de Santé de Kamuli",
-                address: "Kamuli Town, Ouganda",
-                phone: "+256 456 789 012",
-                lat: 0.9275,
-                lng: 33.1181
-            },
-            {
-                name: "Hôpital St. Joseph",
-                address: "Buluya, District de Kamuli",
-                phone: "+256 456 789 013",
-                lat: 0.9562,
-                lng: 33.1458
-            },
-            {
-                name: "Clinique Rurale d'Iringa",
-                address: "Village d'Iringa, Kamuli",
-                phone: "+256 456 789 014",
-                lat: 0.8954,
-                lng: 33.0876
-            },
-            {
-                name: "Dispensaire de Nawanyago",
-                address: "Nawanyago, District de Kamuli",
-                phone: "+256 456 789 015",
-                lat: 0.9123,
-                lng: 33.1765
+        function initApp() {
+            // Gemini API Key
+            const GEMINI_API_KEY = "AIzaSyCitXohWZsQ1ZiJRWunf6pJ80-B-PE5jPg";
+            const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+            
+            // Simulated geolocation
+            let userLocation = "Ouganda, district de Kamuli";
+            
+            // Simulated database of health centers
+            const healthCenters = [
+                {
+                    name: "Centre de Santé de Kamuli",
+                    address: "Kamuli Town, Ouganda",
+                    phone: "+256 456 789 012",
+                    lat: 0.9275,
+                    lng: 33.1181
+                },
+                {
+                    name: "Hôpital St. Joseph",
+                    address: "Buluya, District de Kamuli",
+                    phone: "+256 456 789 013",
+                    lat: 0.9562,
+                    lng: 33.1458
+                },
+                {
+                    name: "Clinique Rurale d'Iringa",
+                    address: "Village d'Iringa, Kamuli",
+                    phone: "+256 456 789 014",
+                    lat: 0.8954,
+                    lng: 33.0876
+                },
+                {
+                    name: "Dispensaire de Nawanyago",
+                    address: "Nawanyago, District de Kamuli",
+                    phone: "+256 456 789 015",
+                    lat: 0.9123,
+                    lng: 33.1765
+                }
+            ];
+            
+            // Emergency advice database
+            const emergencyAdvice = {
+                "snake-bite": {
+                    title: "Premiers Secours - Morsure de Serpent",
+                    content: `
+                        <p><strong>⚠️ ACTION IMMÉDIATE REQUISE :</strong></p>
+                        <ol>
+                            <li>Gardez la personne calme et immobile. Le mouvement augmente la propagation du venin.</li>
+                            <li>Retirez les vêtements ou bijoux serrés près de la zone de la morsure.</li>
+                            <li>Gardez la zone mordue en dessous du niveau du cœur si possible.</li>
+                            <li>Nettoyez doucement la plaie avec du savon et de l'eau si disponible.</li>
+                            <li>Appliquez un bandage léger au-dessus de la morsure (pas trop serré - vous devriez pouvoir glisser un doigt dessous).</li>
+                            <li>NE COUPEZ PAS la plaie, n'aspirez PAS le venin, n'appliquez PAS de glace, et n'utilisez PAS de garrot.</li>
+                            <li>Allez immédiatement à l'hôpital - un antivenin peut être nécessaire.</li>
+                            <li>Si possible, prenez une photo du serpent (à distance sûre) pour aider à l'identifier.</li>
+                        </ol>
+                        <p><strong>Prévention :</strong></p>
+                        <ul>
+                            <li>Portez des bottes en marchant dans les zones herbeuses</li>
+                            <li>Utilisez une lampe de poche la nuit</li>
+                            <li>Soyez prudent en ramassant du bois ou en atteignant des zones sombres</li>
+                        </ul>
+                    `
+                },
+                "dog-bite": {
+                    title: "Premiers Secours - Morsure de Chien",
+                    content: `
+                        <p><strong>⚠️ ACTION IMMÉDIATE REQUISE :</strong></p>
+                        <ol>
+                            <li>Lavez immédiatement la plaie avec du savon et de l'eau courante pendant au moins 5 minutes.</li>
+                            <li>Appliquez une pression douce avec un chiffon propre pour arrêter le saignement.</li>
+                            <li>Appliquez une pommade antibiotique si disponible.</li>
+                            <li>Couvrez avec un bandage stérile.</li>
+                            <li>Consultez immédiatement un professionnel de santé - un vaccin antirabique peut être nécessaire.</li>
+                            <li>Essayez d'obtenir des informations sur le statut vaccinal du chien si possible.</li>
+                            <li>Signalez la morsure aux autorités locales de contrôle des animaux.</li>
+                        </ol>
+                        <p><strong>Surveillez les signes d'infection :</strong> rougeur, gonflement, douleur accrue, fièvre.</p>
+                    `
+                },
+                "heart-attack": {
+                    title: "Premiers Secours - Crise Cardiaque",
+                    content: `
+                        <p><strong>⚠️ ACTION IMMÉDIATE REQUISE :</strong></p>
+                        <ol>
+                            <li>Appelez immédiatement les services médicaux d'urgence.</li>
+                            <li>Faites asseoir la personne, qu'elle se repose et essaie de rester calme.</li>
+                            <li>Desserrez les vêtements serrés.</li>
+                            <li>Demander si la personne prend des médicaments pour la douleur thoracique (comme la nitroglycérine) pour une affection cardiaque connue, et aidez-la à les prendre.</li>
+                            <li>Si la personne est inconsciente et ne respire pas, commencez la RCP.</li>
+                            <li>NE laissez PAS la personne seule (sauf pour appeler à l'aide).</li>
+                            <li>NE permettez PAS à la personne de manger ou de boire quoi que ce soit.</li>
+                        </ol>
+                        <p><strong>Symptômes courants :</strong> Douleur ou gêne thoracique, douleur dans les bras/épaule/dos/jaw, essoufflement, sueur froide, nausée, étourdissement.</p>
+                    `
+                },
+                "epilepsy": {
+                    title: "Premiers Secours - Épilepsie/Crise",
+                    content: `
+                        <p><strong>Pendant une crise :</strong></p>
+                        <ol>
+                            <li>Restez calme et restez avec la personne.</li>
+                            <li>Chronométrez la crise.</li>
+                            <li>Dégager la zone autour de la personne de tout objet dur ou pointu.</li>
+                            <li>Placez quelque chose de doux sous sa tête.</li>
+                            <li>Tournez-la doucement sur le côté pour garder les voies respiratoires dégagées.</li>
+                            <li>NE maintenez PAS la personne au sol ou n'essayez PAS d'arrêter ses mouvements.</li>
+                            <li>NE mettez RIEN dans sa bouche.</li>
+                            <li>NE donnez PAS d'eau, de nourriture ou de pilules jusqu'à ce qu'elle soit complètement réveillée.</li>
+                        </ol>
+                        <p><strong>Appelez les secours si :</strong> la crise dure plus de 5 minutes, une deuxième crise suit immédiatement, la personne a des difficultés à respirer après, une blessure survient pendant la crise, ou si c'est sa première crise.</p>
+                    `
+                },
+                "stroke": {
+                    title: "Premiers Secours - Accident Vasculaire Cérébral (Méthode VITE)",
+                    content: `
+                        <p><strong>⚠️ RECONNAÎTRE LES SYMPTÔMES D'AVC (VITE) :</strong></p>
+                        <ul>
+                            <li><strong>V</strong>isage tombant - Un côté du visage tombe-t-il ?</li>
+                            <li><strong>I</strong>mmobilité du bras - Un bras est-il faible ou engourdi ?</li>
+                            <li><strong>T</strong>rouble de la parole - La parole est-elle pâteuse ou étrange ?</li>
+                            <li><strong>E</strong>n urgence - Notez quand les symptômes ont commencé.</li>
+                        </ul>
+                        <p><strong>Actions immédiates :</strong></p>
+                        <ol>
+                            <li>Appelez immédiatement les services médicaux d'urgence.</li>
+                            <li>Notez l'heure à laquelle les symptômes sont apparus pour la première fois.</li>
+                            <li>Gardez la personne immobile et confortable.</li>
+                            <li>NE donnez PAS de médicaments, de nourriture ou de boissons.</li>
+                            <li>NE laissez PAS la personne s'endormir.</li>
+                            <li>Si elle est inconsciente, vérifiez la respiration et effectuez la RCP si nécessaire.</li>
+                        </ol>
+                        <p>Chaque minute compte - un traitement rapide peut sauver des vies et réduire l'invalidité.</p>
+                    `
+                },
+                "burn": {
+                    title: "Premiers Secours - Brûlure",
+                    content: `
+                        <p><strong>Brûlures mineures (premier degré) :</strong></p>
+                        <ol>
+                            <li>Refroidissez la brûlure sous un filet d'eau tiède (pas froide) pendant 10-15 minutes.</li>
+                            <li>Retirez les objets serrés de la zone brûlée avant que l'enflure n'apparaisse.</li>
+                            <li>Appliquez une lotion apaisante (aloe vera ou hydratant).</li>
+                            <li>Couvrez avec un bandage stérile non adhésif.</li>
+                            <li>Prenez des analgésiques si nécessaire.</li>
+                        </ol>
+                        <p><strong>Brûlures graves (deuxième ou troisième degré) :</strong></p>
+                        <ol>
+                            <li>Appelez les services médicaux d'urgence.</li>
+                            <li>Protégez la personne brûlée contre d'autres blessures.</li>
+                            <li>NE retirez PAS les vêtements collés à la brûlure.</li>
+                            <li>NE plongez PAS les grandes brûlures graves dans de l'eau froide (peut provoquer une hypothermie).</li>
+                            <li>Couvrez la brûlure avec un bandage stérile, humide et frais ou un chiffon propre.</li>
+                            <li>Surveillez les signes de choc (peau pâle et moite, pouls faible, respiration superficielle).</li>
+                        </ol>
+                        <p><strong>Brûlures chimiques :</strong> Rincez continuellement à l'eau pendant au moins 20 minutes.</p>
+                    `
+                },
+                "choking": {
+                    title: "Premiers Secours - Étouffement",
+                    content: `
+                        <p><strong>Si la personne peut tousser, parler ou respirer :</strong></p>
+                        <ul>
+                            <li>Encouragez-la à continuer à tousser.</li>
+                            <li>Ne vous mêlez pas sauf si les symptômes s'aggravent.</li>
+                        </ul>
+                        <p><strong>Si la personne ne peut PAS tousser, parler ou respirer (obstruction complète des voies respiratoires) :</strong></p>
+                        <ol>
+                            <li>Placez-vous derrière la personne et passez vos bras autour de sa taille.</li>
+                            <li>Faites un poing avec une main et placez-le légèrement au-dessus du nombril de la personne.</li>
+                            <li>Saisissez le poing avec votre autre main et effectuez des pressions abdominales rapides vers le haut (manœuvre de Heimlich).</li>
+                            <li>Continuez jusqu'à ce que l'objet soit expulsé ou que la personne devienne inconsciente.</li>
+                            <li>Si la personne devient inconsciente, commencez la RCP et vérifiez la bouche pour l'objet avant les insufflations.</li>
+                        </ol>
+                        <p><strong>Pour les nourrissons :</strong> Utilisez des claques dans le dos et des compressions thoraciques au lieu des pressions abdominales.</p>
+                    `
+                },
+                "fracture": {
+                    title: "Premiers Secours - Fracture",
+                    content: `
+                        <p><strong>Principes généraux :</strong></p>
+                        <ol>
+                            <li>Arrêtez tout saignement en appliquant une pression avec un bandage stérile ou un chiffon propre.</li>
+                            <li>Immobilisez la zone blessée - n'essayez pas de réaligner l'os.</li>
+                            <li>Appliquez des poches de glace pour limiter l'enflure et aider à soulager la douleur (enveloppez la glace dans un chiffon).</li>
+                            <li>Traitez le choc : allongez la personne avec la tête légèrement plus basse que le torse et élevez les jambes si possible.</li>
+                            <li>Consultez immédiatement un professionnel de santé.</li>
+                        </ol>
+                        <p><strong>Pour les fractures ouvertes (os qui dépasse) :</strong></p>
+                        <ul>
+                            <li>NE poussez PAS l'os à l'intérieur.</li>
+                            <li>Couvrez la plaie avec un pansement stérile.</li>
+                            <li>Immobilisez la zone au-dessus et en dessous du site de fracture.</li>
+                        </ul>
+                        <p><strong>Signes de fracture :</strong> déformation, gonflement, ecchymose, douleur intense, incapacité à bouger le membre, sensation de grincement.</p>
+                    `
+                }
+            };
+            
+            // Prevention advice database (fallback content)
+            const preventionAdvice = {
+                malaria: `
+                    <p><strong>5 conseils de prévention simples contre le paludisme :</strong></p>
+                    <ol>
+                        <li>Dormez toujours sous une moustiquaire imprégnée d'insecticide, même pendant la sieste.</li>
+                        <li>Portez des vêtements à manches longues et pantalons longs, surtout au crépuscule et à l'aube.</li>
+                        <li>Utilisez des répulsifs cutanés contenant du DEET ou de l'IR3535 sur les parties exposées de votre corps.</li>
+                        <li>Éliminez les eaux stagnantes autour de votre maison (récipients, pneus, etc.) où les moustiques pondent leurs œufs.</li>
+                        <li>Faites pulvériser les murs intérieurs de votre maison avec des insecticides à effet rémanent, si disponible dans votre région.</li>
+                    </ol>
+                    <p><em>Rappelez-vous : La prévention est toujours plus facile et moins coûteuse que le traitement.</em></p>
+                `,
+                diabetes: `
+                    <p><strong>5 conseils de prévention simples contre le diabète :</strong></p>
+                    <ol>
+                        <li>Mangez plus de légumes et de fruits frais, et réduisez la consommation de sucre et d'aliments transformés.</li>
+                        <li>Bougez régulièrement : marchez au moins 30 minutes par jour, même en faisant vos tâches quotidiennes.</li>
+                        <li>Contrôlez votre poids : même une perte de 5-10% de votre poids actuel peut réduire considérablement votre risque.</li>
+                        <li>Limitez la consommation d'alcool et arrêtez de fumer si vous fumez.</li>
+                        <li>Faites-vous dépister régulièrement, surtout si vous avez des antécédents familiaux de diabète.</li>
+                    </ol>
+                    <p><em>Une alimentation équilibrée et l'activité physique sont vos meilleurs alliés contre le diabète.</em></p>
+                `,
+                "snake-bite": `
+                    <p><strong>3 premières actions à faire en cas de morsure de serpent :</strong></p>
+                    <ol>
+                        <li>Gardez la victime complètement immobile et calme pour ralentir la propagation du venin.</li>
+                        <li>Retirez tout bijou ou vêtement serré près de la zone mordue avant que le gonflement ne s'aggrave.</li>
+                        <li>Transportez immédiatement la victime vers le centre médical le plus proche - ne perdez pas de temps !</li>
+                    </ol>
+                    
+                    <p><strong>3 choses à NE JAMAIS faire :</strong></p>
+                    <ol>
+                        <li>Ne coupez PAS la plaie et n'essayez PAS d'aspirer le venin - cela peut aggraver la situation.</li>
+                        <li>Ne mettez PAS de garrot serré - cela peut causer des dommages tissulaires permanents.</li>
+                        <li>Ne donnez PAS d'alcool, de café ou de médicaments à la victime - cela peut accélérer l'absorption du venin.</li>
+                    </ol>
+                    <p><em>Le temps est crucial - chaque minute compte. Allez directement à l'hôpital !</em></p>
+                `,
+                "child-accidents": `
+                    <p><strong>5 conseils pour prévenir les accidents domestiques chez les jeunes enfants :</strong></p>
+                    <ol>
+                        <li>Surveillez constamment les enfants près du feu, des réchauds ou des récipients d'eau chaude pour éviter les brûlures.</li>
+                        <li>Rangez les médicaments, produits de nettoyage et produits chimiques hors de portée, idéalement sous clé.</li>
+                        <li>Installez des barrières de sécurité en haut et en bas des escaliers, et utilisez des protège-angles sur les meubles.</li>
+                        <li>Ne laissez jamais un enfant seul dans l'eau (baignoire, seau, bassin) - la noyade peut survenir en quelques secondes.</li>
+                        <li>Attachez les meubles lourds au mur pour éviter qu'ils ne basculent si l'enfant essaie de grimper dessus.</li>
+                    </ol>
+                    <p><em>La vigilance constante et quelques aménagements simples peuvent sauver la vie de votre enfant.</em></p>
+                `
+            };
+            
+            // Function to show a screen and hide others
+            function showScreen(screenId) {
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                document.getElementById(screenId).classList.add('active');
             }
-        ];
-        
-        // Emergency advice database
-        const emergencyAdvice = {
-            "snake-bite": {
-                title: "Premiers Secours - Morsure de Serpent",
-                content: `
-                    <p><strong>⚠️ ACTION IMMÉDIATE REQUISE :</strong></p>
-                    <ol>
-                        <li>Gardez la personne calme et immobile. Le mouvement augmente la propagation du venin.</li>
-                        <li>Retirez les vêtements ou bijoux serrés près de la zone de la morsure.</li>
-                        <li>Gardez la zone mordue en dessous du niveau du cœur si possible.</li>
-                        <li>Nettoyez doucement la plaie avec du savon et de l'eau si disponible.</li>
-                        <li>Appliquez un bandage léger au-dessus de la morsure (pas trop serré - vous devriez pouvoir glisser un doigt dessous).</li>
-                        <li>NE COUPEZ PAS la plaie, n'aspirez PAS le venin, n'appliquez PAS de glace, et n'utilisez PAS de garrot.</li>
-                        <li>Allez immédiatement à l'hôpital - un antivenin peut être nécessaire.</li>
-                        <li>Si possible, prenez une photo du serpent (à distance sûre) pour aider à l'identifier.</li>
-                    </ol>
-                    <p><strong>Prévention :</strong></p>
-                    <ul>
-                        <li>Portez des bottes en marchant dans les zones herbeuses</li>
-                        <li>Utilisez une lampe de poche la nuit</li>
-                        <li>Soyez prudent en ramassant du bois ou en atteignant des zones sombres</li>
-                    </ul>
-                `
-            },
-            "dog-bite": {
-                title: "Premiers Secours - Morsure de Chien",
-                content: `
-                    <p><strong>⚠️ ACTION IMMÉDIATE REQUISE :</strong></p>
-                    <ol>
-                        <li>Lavez immédiatement la plaie avec du savon et de l'eau courante pendant au moins 5 minutes.</li>
-                        <li>Appliquez une pression douce avec un chiffon propre pour arrêter le saignement.</li>
-                        <li>Appliquez une pommade antibiotique si disponible.</li>
-                        <li>Couvrez avec un bandage stérile.</li>
-                        <li>Consultez immédiatement un professionnel de santé - un vaccin antirabique peut être nécessaire.</li>
-                        <li>Essayez d'obtenir des informations sur le statut vaccinal du chien si possible.</li>
-                        <li>Signalez la morsure aux autorités locales de contrôle des animaux.</li>
-                    </ol>
-                    <p><strong>Surveillez les signes d'infection :</strong> rougeur, gonflement, douleur accrue, fièvre.</p>
-                `
-            },
-            "heart-attack": {
-                title: "Premiers Secours - Crise Cardiaque",
-                content: `
-                    <p><strong>⚠️ ACTION IMMÉDIATE REQUISE :</strong></p>
-                    <ol>
-                        <li>Appelez immédiatement les services médicaux d'urgence.</li>
-                        <li>Faites asseoir la personne, qu'elle se repose et essaie de rester calme.</li>
-                        <li>Desserrez les vêtements serrés.</li>
-                        <li>Demander si la personne prend des médicaments pour la douleur thoracique (comme la nitroglycérine) pour une affection cardiaque connue, et aidez-la à les prendre.</li>
-                        <li>Si la personne est inconsciente et ne respire pas, commencez la RCP.</li>
-                        <li>NE laissez PAS la personne seule (sauf pour appeler à l'aide).</li>
-                        <li>NE permettez PAS à la personne de manger ou de boire quoi que ce soit.</li>
-                    </ol>
-                    <p><strong>Symptômes courants :</strong> Douleur ou gêne thoracique, douleur dans les bras/épaule/dos/jaw, essoufflement, sueur froide, nausée, étourdissement.</p>
-                `
-            },
-            "epilepsy": {
-                title: "Premiers Secours - Épilepsie/Crise",
-                content: `
-                    <p><strong>Pendant une crise :</strong></p>
-                    <ol>
-                        <li>Restez calme et restez avec la personne.</li>
-                        <li>Chronométrez la crise.</li>
-                        <li>Dégager la zone autour de la personne de tout objet dur ou pointu.</li>
-                        <li>Placez quelque chose de doux sous sa tête.</li>
-                        <li>Tournez-la doucement sur le côté pour garder les voies respiratoires dégagées.</li>
-                        <li>NE maintenez PAS la personne au sol ou n'essayez PAS d'arrêter ses mouvements.</li>
-                        <li>NE mettez RIEN dans sa bouche.</li>
-                        <li>NE donnez PAS d'eau, de nourriture ou de pilules jusqu'à ce qu'elle soit complètement réveillée.</li>
-                    </ol>
-                    <p><strong>Appelez les secours si :</strong> la crise dure plus de 5 minutes, une deuxième crise suit immédiatement, la personne a des difficultés à respirer après, une blessure survient pendant la crise, ou si c'est sa première crise.</p>
-                `
-            },
-            "stroke": {
-                title: "Premiers Secours - Accident Vasculaire Cérébral (Méthode VITE)",
-                content: `
-                    <p><strong>⚠️ RECONNAÎTRE LES SYMPTÔMES D'AVC (VITE) :</strong></p>
-                    <ul>
-                        <li><strong>V</strong>isage tombant - Un côté du visage tombe-t-il ?</li>
-                        <li><strong>I</strong>mmobilité du bras - Un bras est-il faible ou engourdi ?</li>
-                        <li><strong>T</strong>rouble de la parole - La parole est-elle pâteuse ou étrange ?</li>
-                        <li><strong>E</strong>n urgence - Notez quand les symptômes ont commencé.</li>
-                    </ul>
-                    <p><strong>Actions immédiates :</strong></p>
-                    <ol>
-                        <li>Appelez immédiatement les services médicaux d'urgence.</li>
-                        <li>Notez l'heure à laquelle les symptômes sont apparus pour la première fois.</li>
-                        <li>Gardez la personne immobile et confortable.</li>
-                        <li>NE donnez PAS de médicaments, de nourriture ou de boissons.</li>
-                        <li>NE laissez PAS la personne s'endormir.</li>
-                        <li>Si elle est inconsciente, vérifiez la respiration et effectuez la RCP si nécessaire.</li>
-                    </ol>
-                    <p>Chaque minute compte - un traitement rapide peut sauver des vies et réduire l'invalidité.</p>
-                `
-            },
-            "burn": {
-                title: "Premiers Secours - Brûlure",
-                content: `
-                    <p><strong>Brûlures mineures (premier degré) :</strong></p>
-                    <ol>
-                        <li>Refroidissez la brûlure sous un filet d'eau tiède (pas froide) pendant 10-15 minutes.</li>
-                        <li>Retirez les objets serrés de la zone brûlée avant que l'enflure n'apparaisse.</li>
-                        <li>Appliquez une lotion apaisante (aloe vera ou hydratant).</li>
-                        <li>Couvrez avec un bandage stérile non adhésif.</li>
-                        <li>Prenez des analgésiques si nécessaire.</li>
-                    </ol>
-                    <p><strong>Brûlures graves (deuxième ou troisième degré) :</strong></p>
-                    <ol>
-                        <li>Appelez les services médicaux d'urgence.</li>
-                        <li>Protégez la personne brûlée contre d'autres blessures.</li>
-                        <li>NE retirez PAS les vêtements collés à la brûlure.</li>
-                        <li>NE plongez PAS les grandes brûlures graves dans de l'eau froide (peut provoquer une hypothermie).</li>
-                        <li>Couvrez la brûlure avec un bandage stérile, humide et frais ou un chiffon propre.</li>
-                        <li>Surveillez les signes de choc (peau pâle et moite, pouls faible, respiration superficielle).</li>
-                    </ol>
-                    <p><strong>Brûlures chimiques :</strong> Rincez continuellement à l'eau pendant au moins 20 minutes.</p>
-                `
-            },
-            "choking": {
-                title: "Premiers Secours - Étouffement",
-                content: `
-                    <p><strong>Si la personne peut tousser, parler ou respirer :</strong></p>
-                    <ul>
-                        <li>Encouragez-la à continuer à tousser.</li>
-                        <li>Ne vous mêlez pas sauf si les symptômes s'aggravent.</li>
-                    </ul>
-                    <p><strong>Si la personne ne peut PAS tousser, parler ou respirer (obstruction complète des voies respiratoires) :</strong></p>
-                    <ol>
-                        <li>Placez-vous derrière la personne et passez vos bras autour de sa taille.</li>
-                        <li>Faites un poing avec une main et placez-le légèrement au-dessus du nombril de la personne.</li>
-                        <li>Saisissez le poing avec votre autre main et effectuez des pressions abdominales rapides vers le haut (manœuvre de Heimlich).</li>
-                        <li>Continuez jusqu'à ce que l'objet soit expulsé ou que la personne devienne inconsciente.</li>
-                        <li>Si la personne devient inconsciente, commencez la RCP et vérifiez la bouche pour l'objet avant les insufflations.</li>
-                    </ol>
-                    <p><strong>Pour les nourrissons :</strong> Utilisez des claques dans le dos et des compressions thoraciques au lieu des pressions abdominales.</p>
-                `
-            },
-            "fracture": {
-                title: "Premiers Secours - Fracture",
-                content: `
-                    <p><strong>Principes généraux :</strong></p>
-                    <ol>
-                        <li>Arrêtez tout saignement en appliquant une pression avec un bandage stérile ou un chiffon propre.</li>
-                        <li>Immobilisez la zone blessée - n'essayez pas de réaligner l'os.</li>
-                        <li>Appliquez des poches de glace pour limiter l'enflure et aider à soulager la douleur (enveloppez la glace dans un chiffon).</li>
-                        <li>Traitez le choc : allongez la personne avec la tête légèrement plus basse que le torse et élevez les jambes si possible.</li>
-                        <li>Consultez immédiatement un professionnel de santé.</li>
-                    </ol>
-                    <p><strong>Pour les fractures ouvertes (os qui dépasse) :</strong></p>
-                    <ul>
-                        <li>NE poussez PAS l'os à l'intérieur.</li>
-                        <li>Couvrez la plaie avec un pansement stérile.</li>
-                        <li>Immobilisez la zone au-dessus et en dessous du site de fracture.</li>
-                    </ul>
-                    <p><strong>Signes de fracture :</strong> déformation, gonflement, ecchymose, douleur intense, incapacité à bouger le membre, sensation de grincement.</p>
-                `
-            }
-        };
-        
-        // Prevention advice database (fallback content)
-        const preventionAdvice = {
-            malaria: `
-                <p><strong>5 conseils de prévention simples contre le paludisme :</strong></p>
-                <ol>
-                    <li>Dormez toujours sous une moustiquaire imprégnée d'insecticide, même pendant la sieste.</li>
-                    <li>Portez des vêtements à manches longues et pantalons longs, surtout au crépuscule et à l'aube.</li>
-                    <li>Utilisez des répulsifs cutanés contenant du DEET ou de l'IR3535 sur les parties exposées de votre corps.</li>
-                    <li>Éliminez les eaux stagnantes autour de votre maison (récipients, pneus, etc.) où les moustiques pondent leurs œufs.</li>
-                    <li>Faites pulvériser les murs intérieurs de votre maison avec des insecticides à effet rémanent, si disponible dans votre région.</li>
-                </ol>
-                <p><em>Rappelez-vous : La prévention est toujours plus facile et moins coûteuse que le traitement.</em></p>
-            `,
-            diabetes: `
-                <p><strong>5 conseils de prévention simples contre le diabète :</strong></p>
-                <ol>
-                    <li>Mangez plus de légumes et de fruits frais, et réduisez la consommation de sucre et d'aliments transformés.</li>
-                    <li>Bougez régulièrement : marchez au moins 30 minutes par jour, même en faisant vos tâches quotidiennes.</li>
-                    <li>Contrôlez votre poids : même une perte de 5-10% de votre poids actuel peut réduire considérablement votre risque.</li>
-                    <li>Limitez la consommation d'alcool et arrêtez de fumer si vous fumez.</li>
-                    <li>Faites-vous dépister régulièrement, surtout si vous avez des antécédents familiaux de diabète.</li>
-                </ol>
-                <p><em>Une alimentation équilibrée et l'activité physique sont vos meilleurs alliés contre le diabète.</em></p>
-            `,
-            "snake-bite": `
-                <p><strong>3 premières actions à faire en cas de morsure de serpent :</strong></p>
-                <ol>
-                    <li>Gardez la victime complètement immobile et calme pour ralentir la propagation du venin.</li>
-                    <li>Retirez tout bijou ou vêtement serré près de la zone mordue avant que le gonflement ne s'aggrave.</li>
-                    <li>Transportez immédiatement la victime vers le centre médical le plus proche - ne perdez pas de temps !</li>
-                </ol>
-                
-                <p><strong>3 choses à NE JAMAIS faire :</strong></p>
-                <ol>
-                    <li>Ne coupez PAS la plaie et n'essayez PAS d'aspirer le venin - cela peut aggraver la situation.</li>
-                    <li>Ne mettez PAS de garrot serré - cela peut causer des dommages tissulaires permanents.</li>
-                    <li>Ne donnez PAS d'alcool, de café ou de médicaments à la victime - cela peut accélérer l'absorption du venin.</li>
-                </ol>
-                <p><em>Le temps est crucial - chaque minute compte. Allez directement à l'hôpital !</em></p>
-            `,
-            "child-accidents": `
-                <p><strong>5 conseils pour prévenir les accidents domestiques chez les jeunes enfants :</strong></p>
-                <ol>
-                    <li>Surveillez constamment les enfants près du feu, des réchauds ou des récipients d'eau chaude pour éviter les brûlures.</li>
-                    <li>Rangez les médicaments, produits de nettoyage et produits chimiques hors de portée, idéalement sous clé.</li>
-                    <li>Installez des barrières de sécurité en haut et en bas des escaliers, et utilisez des protège-angles sur les meubles.</li>
-                    <li>Ne laissez jamais un enfant seul dans l'eau (baignoire, seau, bassin) - la noyade peut survenir en quelques secondes.</li>
-                    <li>Attachez les meubles lourds au mur pour éviter qu'ils ne basculent si l'enfant essaie de grimper dessus.</li>
-                </ol>
-                <p><em>La vigilance constante et quelques aménagements simples peuvent sauver la vie de votre enfant.</em></p>
-            `
-        };
-        
-        // Function to show a screen and hide others
-        function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
+            
+            // Tab navigation
+            document.querySelectorAll('.tab-btn').forEach(tabBtn => {
+                tabBtn.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    // Add active class to clicked tab
+                    tabBtn.classList.add('active');
+                    // Hide all tab content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    // Show corresponding tab content
+                    const tabId = tabBtn.dataset.tab + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
             });
-            document.getElementById(screenId).classList.add('active');
-        }
-        
-        // Tab navigation
-        document.querySelectorAll('.tab-btn').forEach(tabBtn => {
-            tabBtn.addEventListener('click', () => {
-                // Remove active class from all tabs
+            
+            // Navigation event handlers
+            document.getElementById('start-btn').addEventListener('click', () => {
+                showScreen('diagnostic-screen');
+            });
+            
+            document.getElementById('back-to-home').addEventListener('click', () => {
+                showScreen('home-screen');
+            });
+            
+            document.getElementById('new-diagnosis').addEventListener('click', () => {
+                // Reset checkboxes
+                document.querySelectorAll('.checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                showScreen('diagnostic-screen');
+            });
+            
+            document.getElementById('back-to-result').addEventListener('click', () => {
+                showScreen('result-screen');
+            });
+            
+            document.getElementById('back-to-emergency-menu').addEventListener('click', () => {
+                showScreen('home-screen');
+                // Activate emergency tab
                 document.querySelectorAll('.tab-btn').forEach(btn => {
                     btn.classList.remove('active');
                 });
-                // Add active class to clicked tab
-                tabBtn.classList.add('active');
-                // Hide all tab content
+                document.querySelector('[data-tab="emergency"]').classList.add('active');
                 document.querySelectorAll('.tab-content').forEach(content => {
                     content.classList.remove('active');
                 });
-                // Show corresponding tab content
-                const tabId = tabBtn.dataset.tab + '-tab';
-                document.getElementById(tabId).classList.add('active');
+                document.getElementById('emergency-tab').classList.add('active');
             });
-        });
-        
-        // Navigation event handlers
-        document.getElementById('start-btn').addEventListener('click', () => {
-            showScreen('diagnostic-screen');
-        });
-        
-        document.getElementById('back-to-home').addEventListener('click', () => {
-            showScreen('home-screen');
-        });
-        
-        document.getElementById('new-diagnosis').addEventListener('click', () => {
-            // Reset checkboxes
-            document.querySelectorAll('.checkbox').forEach(checkbox => {
-                checkbox.checked = false;
-            });
-            showScreen('diagnostic-screen');
-        });
-        
-        document.getElementById('back-to-result').addEventListener('click', () => {
-            showScreen('result-screen');
-        });
-        
-        document.getElementById('back-to-emergency-menu').addEventListener('click', () => {
-            showScreen('home-screen');
-            // Activate emergency tab
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector('[data-tab="emergency"]').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById('emergency-tab').classList.add('active');
-        });
-        
-        // Emergency card click handlers
-        document.querySelectorAll('.emergency-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const emergencyType = card.dataset.emergency;
-                const advice = emergencyAdvice[emergencyType];
-                document.getElementById('emergency-title').textContent = advice.title;
-                document.getElementById('emergency-content').innerHTML = advice.content;
-                showScreen('emergency-advice-screen');
-            });
-        });
-        
-        // Emergency services button
-        document.getElementById('emergency-services').addEventListener('click', () => {
-            showServicesScreen();
-        });
-        
-        // Submit diagnosis
-        document.getElementById('submit-diagnosis').addEventListener('click', async () => {
-            // Get location
-            userLocation = document.getElementById('location-input').value || "Ouganda, district de Kamuli";
-            // Get selected symptoms
-            const selectedSymptoms = [];
-            document.querySelectorAll('.checkbox:checked').forEach(checkbox => {
-                selectedSymptoms.push(checkbox.dataset.symptom);
-            });
-            // Check if at least one symptom is selected
-            if (selectedSymptoms.length === 0) {
-                alert("Veuillez sélectionner au moins un symptôme.");
-                return;
-            }
-            // Show loading screen
-            showScreen('loading-screen');
-            try {
-                // Call Gemini API
-                const aiResponse = await callGeminiAPI(selectedSymptoms, userLocation);
-                displayAIResults(aiResponse);
-            } catch (error) {
-                console.error("Erreur lors de l'appel à l'API Gemini:", error);
-                // Fallback response if API fails
-                const fallbackResponse = generateFallbackResponse(selectedSymptoms, userLocation);
-                displayAIResults(fallbackResponse);
-            }
-        });
-        
-        // Function to call Gemini API
-        async function callGeminiAPI(symptoms, location) {
-            const prompt = `En tant qu'expert en santé publique en Afrique, agissez en tant qu'un conseiller médical fiable et non-alarmiste. Un patient dans le ${location} a les symptômes suivants : ${symptoms.join(', ')}. La malaria est endémique dans cette région. Le patient n'a pas accès à un professionnel de la santé. Analysez ces symptômes. Donnez un diagnostic possible et un niveau de probabilité estimé. Ensuite, fournissez un plan d'action immédiat avec des conseils clairs, adaptés à la région. Avertissez explicitement que ceci n'est qu'un avis et que la consultation d'un professionnel est indispensable.`;
-            try {
-                const response = await fetch(GEMINI_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }]
-                    })
+            
+            // Emergency card click handlers
+            document.querySelectorAll('.emergency-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const emergencyType = card.dataset.emergency;
+                    const advice = emergencyAdvice[emergencyType];
+                    document.getElementById('emergency-title').textContent = advice.title;
+                    document.getElementById('emergency-content').innerHTML = advice.content;
+                    showScreen('emergency-advice-screen');
                 });
-                if (!response.ok) {
-                    throw new Error(`Erreur HTTP: ${response.status}`);
+            });
+            
+            // Emergency services button
+            document.getElementById('emergency-services').addEventListener('click', () => {
+                showServicesScreen();
+            });
+            
+            // Submit diagnosis
+            document.getElementById('submit-diagnosis').addEventListener('click', async () => {
+                // Get location
+                userLocation = document.getElementById('location-input').value || "Ouganda, district de Kamuli";
+                // Get selected symptoms
+                const selectedSymptoms = [];
+                document.querySelectorAll('.checkbox:checked').forEach(checkbox => {
+                    selectedSymptoms.push(checkbox.dataset.symptom);
+                });
+                // Check if at least one symptom is selected
+                if (selectedSymptoms.length === 0) {
+                    alert("Veuillez sélectionner au moins un symptôme.");
+                    return;
                 }
-                const data = await response.json();
-                // Extract AI response
-                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
-                    return data.candidates[0].content.parts[0].text;
+                // Show loading screen
+                showScreen('loading-screen');
+                try {
+                    // Call Gemini API
+                    const aiResponse = await callGeminiAPI(selectedSymptoms, userLocation);
+                    displayAIResults(aiResponse);
+                } catch (error) {
+                    console.error("Erreur lors de l'appel à l'API Gemini:", error);
+                    // Fallback response if API fails
+                    const fallbackResponse = generateFallbackResponse(selectedSymptoms, userLocation);
+                    displayAIResults(fallbackResponse);
+                }
+            });
+            
+            // Function to call Gemini API
+            async function callGeminiAPI(symptoms, location) {
+                const prompt = `En tant qu'expert en santé publique en Afrique, agissez en tant qu'un conseiller médical fiable et non-alarmiste. Un patient dans le ${location} a les symptômes suivants : ${symptoms.join(', ')}. La malaria est endémique dans cette région. Le patient n'a pas accès à un professionnel de la santé. Analysez ces symptômes. Donnez un diagnostic possible et un niveau de probabilité estimé. Ensuite, fournissez un plan d'action immédiat avec des conseils clairs, adaptés à la région. Avertissez explicitement que ceci n'est qu'un avis et que la consultation d'un professionnel est indispensable.`;
+                try {
+                    const response = await fetch(GEMINI_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{
+                                    text: prompt
+                                }]
+                            }]
+                        })
+                    });
+                    if (!response.ok) {
+                        throw new Error(`Erreur HTTP: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    // Extract AI response
+                    if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+                        return data.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error("Format de réponse inattendu");
+                    }
+                } catch (error) {
+                    console.error("Erreur détaillée:", error);
+                    throw error;
+                }
+            }
+            
+            // Fallback response function
+            function generateFallbackResponse(symptoms, location) {
+                let diagnosis = "";
+                let advice = "";
+                // Simple logic to determine diagnosis based on symptoms
+                const hasFever = symptoms.includes("fever");
+                const hasHeadache = symptoms.includes("headache");
+                const hasMusclePain = symptoms.includes("muscle pain");
+                const hasNausea = symptoms.includes("nausea");
+                const hasFatigue = symptoms.includes("fatigue");
+                // Malaria likely if fever + headache + muscle pain
+                if (hasFever && hasHeadache && hasMusclePain) {
+                    diagnosis = "Probabilité élevée de paludisme";
+                    advice = `
+                        <p><strong>Actions immédiates recommandées :</strong></p>
+                        <ol>
+                            <li>Reposez-vous et hydratez-vous abondamment avec de l'eau propre.</li>
+                            <li>Si vous avez des médicaments antipaludiques (comme l'artémisinine), prenez-les comme indiqué.</li>
+                            <li>Utilisez des compresses froides pour réduire la fièvre.</li>
+                            <li>Dormez sous une moustiquaire imprégnée d'insecticide.</li>
+                            <li>Contactez immédiatement un centre de santé - le paludisme peut être fatal s'il n'est pas traité rapidement.</li>
+                        </ol>
+                        <p><strong>Prévention future :</strong></p>
+                        <ul>
+                            <li>Utilisez toujours une moustiquaire en dormant.</li>
+                            <li>Portez des vêtements à manches longues au crépuscule.</li>
+                            <li>Éliminez les eaux stagnantes autour de votre maison.</li>
+                        </ul>
+                    `;
+                } 
+                // Other symptom combinations
+                else if (hasFever && (hasNausea || hasFatigue)) {
+                    diagnosis = "Probabilité modérée de paludisme ou autre infection";
+                    advice = `
+                        <p><strong>Actions immédiates recommandées :</strong></p>
+                        <ol>
+                            <li>Surveillez régulièrement votre température.</li>
+                            <li>Hydratez-vous fréquemment avec de l'eau propre et des solutions de réhydratation orale.</li>
+                            <li>Reposez-vous autant que possible.</li>
+                            <li>Si la fièvre persiste plus de 48 heures, consultez un centre de santé.</li>
+                        </ol>
+                        <p><strong>Avertissement :</strong> Dans votre région, le paludisme est courant. Ne négligez pas ces symptômes.</p>
+                    `;
+                }
+                else if (symptoms.includes("cough") || symptoms.includes("diarrhea")) {
+                    diagnosis = "Infection gastro-intestinale ou respiratoire possible";
+                    advice = `
+                        <p><strong>Actions immédiates recommandées :</strong></p>
+                        <ol>
+                            <li>Hydratez-vous abondamment, surtout si vous avez de la diarrhée.</li>
+                            <li>Mangez des aliments légers et faciles à digérer.</li>
+                            <li>Évitez les contacts étroits avec d'autres personnes pour éviter la propagation de l'infection.</li>
+                            <li>Lavez-vous régulièrement les mains avec du savon.</li>
+                            <li>Si les symptômes persistent plus de 3 jours, consultez un professionnel de santé.</li>
+                        </ol>
+                    `;
+                }
+                else {
+                    diagnosis = "Symptômes non spécifiques - surveillance recommandée";
+                    advice = `
+                        <p><strong>Conseils généraux :</strong></p>
+                        <ol>
+                            <li>Continuez à surveiller vos symptômes.</li>
+                            <li>Reposez-vous suffisamment et maintenez une bonne hydratation.</li>
+                            <li>Notez tout changement dans votre état de santé.</li>
+                            <li>Si de nouveaux symptômes apparaissent ou s'aggravent, consultez un centre de santé.</li>
+                        </ol>
+                        <p>Rappelez-vous que dans votre région, des maladies comme le paludisme peuvent se développer rapidement. Restez vigilant.</p>
+                    `;
+                }
+                // Add standard medical disclaimer
+                advice += `
+                    <p style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 5px;">
+                        <strong>⚠️ Avertissement important :</strong> Ce diagnostic est fourni par une intelligence artificielle à des fins informatives uniquement. Il ne remplace pas la consultation médicale professionnelle. En cas de doute ou d'aggravation des symptômes, contactez immédiatement un professionnel de santé.
+                    </p>
+                `;
+                return { diagnosis, advice, isFallback: true };
+            }
+            
+            // Function to display AI results
+            function displayAIResults(aiResponse) {
+                if (aiResponse.isFallback) {
+                    // Use structured fallback response
+                    document.getElementById('diagnosis-title').textContent = aiResponse.diagnosis;
+                    document.getElementById('diagnosis-content').innerHTML = `<p>Basé sur vos symptômes et votre localisation (${userLocation}), notre système IA estime :</p>`;
+                    document.getElementById('advice-content').innerHTML = aiResponse.advice;
                 } else {
-                    throw new Error("Format de réponse inattendu");
+                    // Use Gemini API response
+                    document.getElementById('diagnosis-title').textContent = "Analyse IA";
+                    document.getElementById('diagnosis-content').innerHTML = `<p>Basé sur vos symptômes et votre localisation (${userLocation}) :</p>`;
+                    document.getElementById('advice-content').innerHTML = `<p>${aiResponse.replace(/\n/g, '<br>')}</p>`;
                 }
-            } catch (error) {
-                console.error("Erreur détaillée:", error);
-                throw error;
+                // Show results screen
+                showScreen('result-screen');
             }
-        }
-        
-        // Fallback response function
-        function generateFallbackResponse(symptoms, location) {
-            let diagnosis = "";
-            let advice = "";
-            // Simple logic to determine diagnosis based on symptoms
-            const hasFever = symptoms.includes("fever");
-            const hasHeadache = symptoms.includes("headache");
-            const hasMusclePain = symptoms.includes("muscle pain");
-            const hasNausea = symptoms.includes("nausea");
-            const hasFatigue = symptoms.includes("fatigue");
-            // Malaria likely if fever + headache + muscle pain
-            if (hasFever && hasHeadache && hasMusclePain) {
-                diagnosis = "Probabilité élevée de paludisme";
-                advice = `
-                    <p><strong>Actions immédiates recommandées :</strong></p>
-                    <ol>
-                        <li>Reposez-vous et hydratez-vous abondamment avec de l'eau propre.</li>
-                        <li>Si vous avez des médicaments antipaludiques (comme l'artémisinine), prenez-les comme indiqué.</li>
-                        <li>Utilisez des compresses froides pour réduire la fièvre.</li>
-                        <li>Dormez sous une moustiquaire imprégnée d'insecticide.</li>
-                        <li>Contactez immédiatement un centre de santé - le paludisme peut être fatal s'il n'est pas traité rapidement.</li>
-                    </ol>
-                    <p><strong>Prévention future :</strong></p>
-                    <ul>
-                        <li>Utilisez toujours une moustiquaire en dormant.</li>
-                        <li>Portez des vêtements à manches longues au crépuscule.</li>
-                        <li>Éliminez les eaux stagnantes autour de votre maison.</li>
-                    </ul>
-                `;
-            } 
-            // Other symptom combinations
-            else if (hasFever && (hasNausea || hasFatigue)) {
-                diagnosis = "Probabilité modérée de paludisme ou autre infection";
-                advice = `
-                    <p><strong>Actions immédiates recommandées :</strong></p>
-                    <ol>
-                        <li>Surveillez régulièrement votre température.</li>
-                        <li>Hydratez-vous fréquemment avec de l'eau propre et des solutions de réhydratation orale.</li>
-                        <li>Reposez-vous autant que possible.</li>
-                        <li>Si la fièvre persiste plus de 48 heures, consultez un centre de santé.</li>
-                    </ol>
-                    <p><strong>Avertissement :</strong> Dans votre région, le paludisme est courant. Ne négligez pas ces symptômes.</p>
-                `;
-            }
-            else if (symptoms.includes("cough") || symptoms.includes("diarrhea")) {
-                diagnosis = "Infection gastro-intestinale ou respiratoire possible";
-                advice = `
-                    <p><strong>Actions immédiates recommandées :</strong></p>
-                    <ol>
-                        <li>Hydratez-vous abondamment, surtout si vous avez de la diarrhée.</li>
-                        <li>Mangez des aliments légers et faciles à digérer.</li>
-                        <li>Évitez les contacts étroits avec d'autres personnes pour éviter la propagation de l'infection.</li>
-                        <li>Lavez-vous régulièrement les mains avec du savon.</li>
-                        <li>Si les symptômes persistent plus de 3 jours, consultez un professionnel de santé.</li>
-                    </ol>
-                `;
-            }
-            else {
-                diagnosis = "Symptômes non spécifiques - surveillance recommandée";
-                advice = `
-                    <p><strong>Conseils généraux :</strong></p>
-                    <ol>
-                        <li>Continuez à surveiller vos symptômes.</li>
-                        <li>Reposez-vous suffisamment et maintenez une bonne hydratation.</li>
-                        <li>Notez tout changement dans votre état de santé.</li>
-                        <li>Si de nouveaux symptômes apparaissent ou s'aggravent, consultez un centre de santé.</li>
-                    </ol>
-                    <p>Rappelez-vous que dans votre région, des maladies comme le paludisme peuvent se développer rapidement. Restez vigilant.</p>
-                `;
-            }
-            // Add standard medical disclaimer
-            advice += `
-                <p style="margin-top: 20px; padding: 15px; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 5px;">
-                    <strong>⚠️ Avertissement important :</strong> Ce diagnostic est fourni par une intelligence artificielle à des fins informatives uniquement. Il ne remplace pas la consultation médicale professionnelle. En cas de doute ou d'aggravation des symptômes, contactez immédiatement un professionnel de santé.
-                </p>
-            `;
-            return { diagnosis, advice, isFallback: true };
-        }
-        
-        // Function to display AI results
-        function displayAIResults(aiResponse) {
-            if (aiResponse.isFallback) {
-                // Use structured fallback response
-                document.getElementById('diagnosis-title').textContent = aiResponse.diagnosis;
-                document.getElementById('diagnosis-content').innerHTML = `<p>Basé sur vos symptômes et votre localisation (${userLocation}), notre système IA estime :</p>`;
-                document.getElementById('advice-content').innerHTML = aiResponse.advice;
-            } else {
-                // Use Gemini API response
-                document.getElementById('diagnosis-title').textContent = "Analyse IA";
-                document.getElementById('diagnosis-content').innerHTML = `<p>Basé sur vos symptômes et votre localisation (${userLocation}) :</p>`;
-                document.getElementById('advice-content').innerHTML = `<p>${aiResponse.replace(/\n/g, '<br>')}</p>`;
-            }
-            // Show results screen
-            showScreen('result-screen');
-        }
-        
-        // Show services screen
-        document.getElementById('view-services').addEventListener('click', () => {
-            showServicesScreen();
-        });
-        
-        // Function to show services screen
-        function showServicesScreen() {
-            // Update location display
-            document.getElementById('user-location-display').textContent = userLocation;
-            // Calculate nearest center (simulation)
-            const nearestCenter = healthCenters[0]; // For simulation, take the first one
-            // Generate map centered on nearest center
-            const mapUrl = `https://maps.google.com/maps?q=${nearestCenter.lat},${nearestCenter.lng}&z=12&output=embed`;
-            document.getElementById('map-iframe').src = mapUrl;
-            // Generate health centers list
-            const centersList = document.getElementById('health-centers-list');
-            centersList.innerHTML = '<h3>🏥 Centres de Santé Disponibles :</h3>';
-            healthCenters.forEach(center => {
-                const centerElement = document.createElement('div');
-                centerElement.className = 'health-center';
-                centerElement.innerHTML = `
-                    <div class="center-name">${center.name}</div>
-                    <div class="center-address">${center.address}</div>
-                    <div class="center-phone">📞 ${center.phone}</div>
-                    <a href="tel:${center.phone.replace(/\s/g, '')}" class="btn" style="margin-top: 10px; padding: 8px; font-size: 0.9rem;">Appeler ce centre</a>
-                `;
-                centersList.appendChild(centerElement);
+            
+            // Show services screen
+            document.getElementById('view-services').addEventListener('click', () => {
+                showServicesScreen();
             });
-            showScreen('services-screen');
-        }
-        
-        // Prevention button click handlers
-        document.querySelectorAll('.fluid-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const preventionType = this.getAttribute('data-prevention');
-                const topicTitles = {
-                    malaria: "Prévention du Paludisme",
-                    diabetes: "Prévention du Diabète",
-                    "snake-bite": "Premiers Secours - Morsures de Serpent",
-                    "child-accidents": "Prévention des Accidents Domestiques chez les Enfants"
-                };
-                
-                // Show loading
-                document.getElementById('preventionLoading').style.display = 'block';
-                
-                // Simulate API call delay
-                setTimeout(() => {
-                    document.getElementById('preventionLoading').style.display = 'none';
-                    document.getElementById('preventionModalTitle').textContent = topicTitles[preventionType];
-                    document.getElementById('preventionModalContent').innerHTML = preventionAdvice[preventionType];
-                    document.getElementById('preventionModal').style.display = 'flex';
-                }, 1500);
-            });
-        });
-        
-        // Close prevention modal function
-        function closePreventionModal() {
-            document.getElementById('preventionModal').style.display = 'none';
-        }
-        
-        // Close modal when clicking outside
-        document.getElementById('preventionModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePreventionModal();
+            
+            // Function to show services screen
+            function showServicesScreen() {
+                // Update location display
+                document.getElementById('user-location-display').textContent = userLocation;
+                // Calculate nearest center (simulation)
+                const nearestCenter = healthCenters[0]; // For simulation, take the first one
+                // Generate map centered on nearest center
+                const mapUrl = `https://maps.google.com/maps?q=${nearestCenter.lat},${nearestCenter.lng}&z=12&output=embed`;
+                document.getElementById('map-iframe').src = mapUrl;
+                // Generate health centers list
+                const centersList = document.getElementById('health-centers-list');
+                centersList.innerHTML = '<h3>🏥 Centres de Santé Disponibles :</h3>';
+                healthCenters.forEach(center => {
+                    const centerElement = document.createElement('div');
+                    centerElement.className = 'health-center';
+                    centerElement.innerHTML = `
+                        <div class="center-name">${center.name}</div>
+                        <div class="center-address">${center.address}</div>
+                        <div class="center-phone">📞 ${center.phone}</div>
+                        <a href="tel:${center.phone.replace(/\s/g, '')}" class="btn" style="margin-top: 10px; padding: 8px; font-size: 0.9rem;">Appeler ce centre</a>
+                    `;
+                    centersList.appendChild(centerElement);
+                });
+                showScreen('services-screen');
             }
-        });
-        
-        // Initialization
-        document.addEventListener('DOMContentLoaded', () => {
-            // Pre-fill location
+            
+            // Prevention button click handlers
+            document.querySelectorAll('.fluid-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const preventionType = this.getAttribute('data-prevention');
+                    const topicTitles = {
+                        malaria: "Prévention du Paludisme",
+                        diabetes: "Prévention du Diabète",
+                        "snake-bite": "Premiers Secours - Morsures de Serpent",
+                        "child-accidents": "Prévention des Accidents Domestiques chez les Enfants"
+                    };
+                    
+                    // Show loading
+                    document.getElementById('preventionLoading').style.display = 'block';
+                    
+                    // Simulate API call delay
+                    setTimeout(() => {
+                        document.getElementById('preventionLoading').style.display = 'none';
+                        document.getElementById('preventionModalTitle').textContent = topicTitles[preventionType];
+                        document.getElementById('preventionModalContent').innerHTML = preventionAdvice[preventionType];
+                        document.getElementById('preventionModal').style.display = 'flex';
+                    }, 800);
+                });
+            });
+            
+            // Close prevention modal function
+            window.closePreventionModal = function() {
+                document.getElementById('preventionModal').style.display = 'none';
+            };
+            
+            // Close modal when clicking outside
+            document.getElementById('preventionModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePreventionModal();
+                }
+            });
+            
+            // Initialization
             document.getElementById('location-input').value = userLocation;
-        });
+            
+            // Add keyboard support for better accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && document.getElementById('preventionModal').style.display === 'flex') {
+                    closePreventionModal();
+                }
+            });
+        }
     </script>
 </body>
 </html>
